@@ -41,7 +41,7 @@ class S3XComBackend(BaseXCom):
 
             if S3XComBackend.CLEAR_AT_COMPLETION:
                 fs = s3fs.S3FileSystem(key=S3XComBackend.AWS_ACCESS_KEY_ID,secret=S3XComBackend.AWS_SECRET_ACCESS_KEY)
-                fs.rm_file(key)
+                fs.rm_file(f'{S3XComBackend.PREFIX}/{key}')
 
              
         return result
