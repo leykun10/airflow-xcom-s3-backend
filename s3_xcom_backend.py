@@ -9,7 +9,7 @@ class S3XComBackend(BaseXCom):
     BUCKET_NAME = os.getenv('BUCKET_NAME')
     AWS_ACCESS_KEY_ID=os.getenv('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY=os.getenv('AWS_SECRET_ACCESS_KEY')
-    CLEAR_AT_COMPLETION = (os.getenv('CLEAR_AT_COMPLETION','False')=='True')
+    DELETE_AT_COMPLETION = (os.getenv('CLEAR_AT_COMPLETION','False')=='True')
     @staticmethod
     def serialize_value(value: Any):
         if isinstance(value, pd.DataFrame):
@@ -38,7 +38,7 @@ class S3XComBackend(BaseXCom):
                         "key": S3XComBackend.AWS_ACCESS_KEY_ID,
                         "secret": S3XComBackend.AWS_SECRET_ACCESS_KEY,
                     },)
-            # todo: check if CLEAR_AT_COMPLETION is true or not and delete the object after task completion
+
             if S3XComBackend.CLEAR_AT_COMPLETION:
                 fs = s3fs.S3FileSystem(key=S3XComBackend.AWS_ACCESS_KEY_ID,secret=S3XComBackend.AWS_SECRET_ACCESS_KEY)
                 fs.rm_file(key)
